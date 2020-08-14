@@ -10,12 +10,16 @@ while ($row = mysqli_fetch_array($result))
     $list = $list."<li><a href=\"index.php?id={$row['id']}\">{$escape_title}</a></li>";
 }
 
-$article = array(
-    'title'=>'Welcom',
-    'description'=>'Hello, WEB'
-);
-
+$sql = "SELECT * FROM author";
+$result = mysqli_query($conn, $sql);
+$select_form = '<select name="author_id">';
+while($row = mysqli_fetch_array($result))
+{
+  $select_form .= '<option value="'.$row['id'].'">'.$row['name'].'</option>';
+}
+$select_form .= '</select>';
 ?>
+
 <!doctype html>
 <html>
   <head>
@@ -26,8 +30,9 @@ $article = array(
     <h1><a href="index.php">WEB</a></h1>
     <ol><?=$list?></ol>
     <form action="process_create.php" method="POST">
-    <P><input type="text" name="title" placeholder="title" value="<?=$article['title']?>"></P>
+    <p><input type="text" name="title" placeholder="title"></p>
     <p><textarea name="description" placeholder="description" id="" cols="30" rows="10"></textarea></p>
+    <?=$select_form?>
     <p><input type="submit"></p>
 </form>
   </body>
