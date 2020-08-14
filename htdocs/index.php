@@ -15,6 +15,7 @@ $article = array(
     'description'=>'Hello, WEB'
 );
 
+$update_link = '';
 if(isset($_GET['id'])) 
 {
     $filtered_id = mysqli_real_escape_string($conn, $_GET['id']);
@@ -23,6 +24,7 @@ if(isset($_GET['id']))
     $row = mysqli_fetch_array($result);
     $article['title'] = htmlspecialchars($row['title']);
     $article['description'] = htmlspecialchars($row['description']);
+    $update_link = '<a href = "update.php?id='.$_GET['id'].'">update</a>';
 }
 
 ?>
@@ -36,6 +38,7 @@ if(isset($_GET['id']))
     <h1><a href="index.php">WEB</a></h1>
     <ol><?=$list?></ol>
     <a href = "create.php">create</a>
+    <?=$update_link?>
     <h2><?=$article['title']?></h2>
     <?=$article['description']?>
   </body>
